@@ -24,6 +24,7 @@ reporoot = find_repository_root(pwd)
 subprocess.run(["podman", "run",
                 "--interactive",
                 "--mount", f"type=bind,src={reporoot},dst={reporoot}",
+                "--mount", "type=volume,src=cargo-registry,dst=/home/buytenh/.cargo/registry",
                 "--tty",
                 "--userns", "keep-id",
                 "rustdev",
