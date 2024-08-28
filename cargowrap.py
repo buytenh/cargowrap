@@ -4,7 +4,7 @@ import pathlib
 import subprocess
 import sys
 
-def find_repository_root(pwd):
+def find_mount_root(pwd):
     p = pwd
 
     while True:
@@ -13,17 +13,16 @@ def find_repository_root(pwd):
 
         parent = p.parent
         if p == parent:
-            print(f"can't find root of repository", file=sys.stderr)
-            sys.exit(1)
+            return pwd
 
         p = parent
 
 pwd = pathlib.Path().absolute()
-reporoot = find_repository_root(pwd)
+mount_root = find_mount_root(pwd)
 
 subprocess.run(["podman", "run",
                 "--interactive",
-                "--mount", f"type=bind,src={reporoot},dst={reporoot}",
+                "--mount", f"type=bind,src={mount_root},dst={mount_root}",
                 "--mount", "type=volume,src=cargo-registry,dst=/home/buytenh/.cargo/registry",
                 "--tty",
                 "--userns", "keep-id",
