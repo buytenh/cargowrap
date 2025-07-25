@@ -21,6 +21,7 @@ pwd = pathlib.Path().absolute()
 mount_root = find_mount_root(pwd)
 
 subprocess.run(["podman", "run",
+                "--env", "RUSTFLAGS",
                 "--env", "RUST_LOG",
                 "--interactive",
                 "--mount", f"type=bind,src={mount_root},dst={mount_root}",
