@@ -1,4 +1,4 @@
-FROM fedora:42
+FROM fedora:43
 RUN dnf -y upgrade
 RUN dnf -y install gcc openssl-devel
 RUN useradd -s /bin/bash buytenh
