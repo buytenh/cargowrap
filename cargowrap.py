@@ -21,12 +21,13 @@ pwd = pathlib.Path().absolute()
 mount_root = find_mount_root(pwd)
 
 subprocess.run(["podman", "run",
-                "--env", "RUSTFLAGS",
+                "--env", "RUST_BACKTRACE",
                 "--env", "RUST_LOG",
+                "--env", "RUSTFLAGS",
                 "--interactive",
-                "--mount", f"type=bind,src={mount_root},dst={mount_root}",
                 "--mount", "type=volume,src=cargo-git,dst=/home/buytenh/.cargo/git",
                 "--mount", "type=volume,src=cargo-registry,dst=/home/buytenh/.cargo/registry",
+                "--mount", f"type=bind,src={mount_root},dst={mount_root}",
                 "--tty",
                 "--userns", "keep-id",
                 "rustdev",
