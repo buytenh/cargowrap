@@ -4,18 +4,23 @@ import pathlib
 import subprocess
 import sys
 
+# Find the grandest parent directory that contains a Cargo.toml file.
 def find_mount_root(pwd):
-    mount_root = pwd
+    dir = pwd
+
+    mount_root = dir
 
     while True:
-        if mount_root.joinpath("Cargo.toml").is_file() and mount_root.joinpath("src").is_dir():
-            return mount_root
+        if dir.joinpath("Cargo.toml").is_file():
+            mount_root = dir
 
-        parent = mount_root.parent
-        if mount_root == parent:
-            return pwd
+        parent = dir.parent
+        if dir == parent:
+            break
 
-        mount_root = parent
+        dir = parent
+
+    return mount_root
 
 pwd = pathlib.Path().absolute()
 mount_root = find_mount_root(pwd)
