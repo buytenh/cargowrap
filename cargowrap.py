@@ -5,17 +5,17 @@ import subprocess
 import sys
 
 def find_mount_root(pwd):
-    p = pwd
+    mount_root = pwd
 
     while True:
-        if p.joinpath("Cargo.toml").is_file() and p.joinpath("src").is_dir():
-            return p
+        if mount_root.joinpath("Cargo.toml").is_file() and mount_root.joinpath("src").is_dir():
+            return mount_root
 
-        parent = p.parent
-        if p == parent:
+        parent = mount_root.parent
+        if mount_root == parent:
             return pwd
 
-        p = parent
+        mount_root = parent
 
 pwd = pathlib.Path().absolute()
 mount_root = find_mount_root(pwd)
